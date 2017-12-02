@@ -25,6 +25,18 @@ public class UserInfo implements Serializable {
     }
   }
 
+  public boolean hasTaken(Course course) {
+    String longName = course.getCourseName();
+    // truncate  to len6 to remove useless info
+    String courseName = longName.substring(0, Math.min(longName.length(), 6));
+    for (Course takenCourse: takenCourses) {
+      if(takenCourse.getCourseName().contains(courseName)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   protected UserInfo() {
     super();
   }
