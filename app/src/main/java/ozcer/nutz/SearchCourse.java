@@ -1,12 +1,15 @@
 package ozcer.nutz;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -36,6 +39,7 @@ public class SearchCourse extends AppCompatActivity {
     String apiKey = "aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"csca08\"&key=";
     ArrayList<String> searchResult;
+    ArrayList<String> searchResultCourseCode;
     ArrayAdapter<String> myAdapter;
 
 
@@ -46,6 +50,8 @@ public class SearchCourse extends AppCompatActivity {
         searchResult = new ArrayList<>();
         searchResult.add("blank 1");
         searchResult.add("blank 2");
+
+        searchResultCourseCode = new ArrayList<>();
 
         EditText searchFieldEdt = (EditText) findViewById(R.id.searchFieldEdt);
 
@@ -60,9 +66,18 @@ public class SearchCourse extends AppCompatActivity {
             }
         });
 
+
         ListView searchResultLv = (ListView)findViewById(R.id.searchResultLv);
         myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, searchResult);
         searchResultLv.setAdapter(myAdapter);
+        searchResultLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                Intent i = new Intent(SearchCourse.this, CourseDetailActivity.class);
+                i.putExtra("COURSE_CODE", searchResultCourseCode.get(index));
+            }
+        });
+
     }
 
     public class SearchByCourseCodeTask extends AsyncTask<String, Void, JSONArray> {
@@ -121,6 +136,7 @@ public class SearchCourse extends AppCompatActivity {
             super.onPostExecute(jsonArray);
 
             searchResult.clear();
+            searchResultCourseCode.clear();
             Toast.makeText(SearchCourse.this, "in post exec", Toast.LENGTH_SHORT).show();
             for(int i=0;i<jsonArray.length();i++) {
                 try {
@@ -128,6 +144,7 @@ public class SearchCourse extends AppCompatActivity {
                     String courseCode = course.getString("code");
                     String name = course.getString("name");
                     searchResult.add(courseCode+"\n\t"+name);
+                    searchResultCourseCode.add(courseCode);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
