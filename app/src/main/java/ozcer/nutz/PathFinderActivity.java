@@ -22,6 +22,7 @@ public class PathFinderActivity extends AppCompatActivity {
         for (Course course : leaves) {
             List<Course> prereqCourses = course.getPrereqs();
             if (prereqCourses != null && !prereqCourses.isEmpty()) {
+                leaves.remove(course);
                 leaves.addAll(prereqCourses);
             }
         }
