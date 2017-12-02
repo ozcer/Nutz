@@ -7,7 +7,7 @@ public class Course {
   private String name;
   private ArrayList<String> prereqs; // just a course code
 
-  public Course(String courseCode, String name, String term, ArrayList<String> prereqs){
+  public Course(String courseCode, String name, ArrayList<String> prereqs){
     this.courseCode = courseCode;
     this.name = name;
     this.prereqs = prereqs;
