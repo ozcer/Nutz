@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     searchBtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-      Intent intent = new Intent(MainActivity.this, SearchCourse.class);
+      Intent intent = new Intent(MainActivity.this, SearchCourseActivity.class);
       startActivity(intent);
     }
     });
