@@ -1,27 +1,34 @@
 package ozcer.nutz.Structs;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class CourseBuilder {
-  private Course course;
+  private String courseCode;
+  private String courseName;
+  private List<Course> prereqs;
 
   public CourseBuilder setCourseCode(String courseCode) {
-    this.course.setCourseCode(courseCode);
+    this.courseCode = courseCode;
     return this;
   }
 
-  public CourseBuilder setName(String name) {
-    this.course.setName(name);
+  public CourseBuilder setCourseName(String name) {
+    this.courseName = name;
     return this;
   }
 
-  public CourseBuilder setPrereqs(List<String> prereqs){
-    this.course.setPrereqs(prereqs);
+  public CourseBuilder setPrereqs(List<Course> prereqs){
+    this.prereqs = prereqs;
     return this;
   }
 
   public Course build() {
-    return this.course;
+    Course course = new Course();
+    course.setCourseCode(this.courseCode);
+    course.setCourseName(this.courseName);
+    course.setPrereqs(this.prereqs);
+    return course;
   }
 
 }
