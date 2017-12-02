@@ -32,8 +32,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class SearchCourseActivity extends AppCompatActivity {
 
-    String apiKey = "aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
-    String apiBase = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"csca08\"&key=";
+    String apiKey = "&key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
+    String apiBase = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
     ArrayList<String> searchResult;
     ArrayList<String> searchResultCourseCode;
     ArrayAdapter<String> myAdapter;
@@ -88,7 +88,7 @@ public class SearchCourseActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL(
-                        String.format(apiBase+apiKey));
+                        String.format(apiBase+params[0]+"\""+apiKey));
                 connection  = (HttpsURLConnection) url.openConnection();
                 connection.connect();
 
