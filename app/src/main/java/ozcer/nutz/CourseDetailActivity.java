@@ -3,6 +3,7 @@ package ozcer.nutz;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,7 +23,9 @@ public class CourseDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        String courseCode = getIntent().getStringExtra("courseCode");
+        String courseCode = getIntent().getStringExtra("COURSE_CODE");
+        TextView title = (TextView) findViewById(R.id.courseDetailCode);
+        title.setText(courseCode);
         HttpsURLConnection connection = null;
         BufferedReader reader = null;
 
