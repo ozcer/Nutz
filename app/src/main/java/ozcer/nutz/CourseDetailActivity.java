@@ -136,4 +136,71 @@ public class CourseDetailActivity extends AppCompatActivity {
 
         }
     }
+    public class SearchByActualCourseCodeTask extends AsyncTask<String, Void, JSONArray> {
+
+        @Override
+        protected JSONArray doInBackground(String... params) {
+            HttpsURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try {
+                URL url = new URL(
+                        String.format(urlFindByCourseId));
+                connection  = (HttpsURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+                while((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+
+                String finalJson = buffer.toString();
+                Log.i("oscar", finalJson);
+                JSONArray jsonArray = new JSONArray(finalJson);
+
+                return jsonArray;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if(connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if(reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            super.onPostExecute(jsonArray);
+
+
+            for(int i=0;i<jsonArray.length();i++) {
+                try {
+                    JSONObject course = jsonArray.getJSONObject(i);
+                    String courseId = course.getString("id");
+                    String name = course.getString("name");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
