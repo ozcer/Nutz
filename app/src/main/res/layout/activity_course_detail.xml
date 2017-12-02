@@ -5,27 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ozcer.nutz.CourseDetailActivity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="30dp">
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
             <TextView
                 android:id="@+id/courseDetailCode"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:paddingTop="30dp"
                 android:paddingBottom="30dp"
                 android:paddingLeft="100dp"
                 android:paddingRight="100dp"
-                android:text="TextView"/>
+                android:text=""/>
+            <TextView
+                android:id="@+id/courseDetailNameHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/courseDetailCode"
+                android:text="Name:"/>
+            <TextView
+                android:id="@+id/courseDetailName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@id/courseDetailNameHeader"
+                android:paddingBottom="30dp"
+                android:text=""/>
+            <TextView
+                android:id="@+id/courseDetailTermHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/courseDetailName"
+                android:text="Term"/>
+            <TextView
+                android:id="@+id/courseDetailTerm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/courseDetailTermHeader"
+                android:paddingBottom="30dp"
+                android:text=""/>
+            <TextView
+                android:id="@+id/courseDetailPrereqHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/courseDetailTerm"
+                android:text="Prerequisites"/>
+            <TextView
+                android:id="@+id/courseDetailPrereq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/courseDetailPrereqHeader"
+                android:text=""/>
+        </RelativeLayout>
 
-
-        </LinearLayout>
-    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
