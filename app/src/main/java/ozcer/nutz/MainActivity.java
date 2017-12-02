@@ -10,21 +10,21 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> searchResult = new ArrayList<>();
+  ArrayList<String> searchResult = new ArrayList<>();
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    Button searchBtn = (Button) findViewById(R.id.searchCourseBtn);
+
+    searchBtn.setOnClickListener(new View.OnClickListener() {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Button searchBtn = (Button) findViewById(R.id.searchCourseBtn);
-
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SearchCourse.class);
-                startActivity(intent);
-            }
-        });
+    public void onClick(View view) {
+      Intent intent = new Intent(MainActivity.this, SearchCourse.class);
+      startActivity(intent);
     }
+    });
+  }
 }
