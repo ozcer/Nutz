@@ -18,6 +18,10 @@ public class UserInfo implements Serializable {
         takenCourses.add(course);
       }
     }
+
+    if (takenCourses.isEmpty()) {
+      takenCourses.add(course);
+    }
   }
 
   protected UserInfo() {

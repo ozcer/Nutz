@@ -7,6 +7,7 @@ public class CourseBuilder {
   private String courseCode;
   private String courseId;
   private String courseName;
+  private int term;
   private List<Course> prereqs;
 
   public CourseBuilder setCourseCode(String courseCode) {
@@ -26,6 +27,11 @@ public class CourseBuilder {
 
   public CourseBuilder setCourseId(String courseId) {
     this.courseId = courseId;
+    return this;
+  }
+
+  public CourseBuilder setTerm(int term) {
+    this.term = term;
     return this;
   }
 

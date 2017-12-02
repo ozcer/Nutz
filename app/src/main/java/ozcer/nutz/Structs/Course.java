@@ -7,7 +7,7 @@ public class Course {
   private String courseName;
   private String courseId;
   private List<Course> prereqs;
-  private Integer term;
+  private int term;
 
   public List<Course> getPrereqs() {
     return prereqs;
@@ -22,7 +22,7 @@ public class Course {
     return this.courseId;
   }
 
-  public Integer getTerm() {
+  public int getTerm() {
     return this.term;
   }
 
