@@ -146,7 +146,6 @@ public class CourseDetailActivity extends AppCompatActivity {
                             Course course = courseBuilder.setCourseId(urlFindByCourseId)
                                     .setCourseCode(courseCode)
                                     .setCourseName(courseName)
-                                    .setTerm(Integer.parseInt(courseTerm))
                                     .build();
                             userInfo.addCourse(course);
                         }

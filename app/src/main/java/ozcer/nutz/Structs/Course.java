@@ -1,5 +1,8 @@
 package ozcer.nutz.Structs;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import java.util.List;
 
 public class Course {
@@ -16,6 +19,7 @@ public class Course {
   public void setCourseId(String courseId) {
     this.courseId = courseId;
     this.setTerm(Integer.parseInt(courseId.substring(courseId.length()-1)));
+    Log.i("term", "my term is: "+ Integer.toString( this.term));
   }
 
   public String getCourseId() {
