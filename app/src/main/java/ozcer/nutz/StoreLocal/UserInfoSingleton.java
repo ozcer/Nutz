@@ -1,10 +1,15 @@
 package ozcer.nutz.StoreLocal;
 
+import android.content.Context;
+
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class UserInfoSingleton {
 
@@ -18,28 +23,36 @@ public class UserInfoSingleton {
     return userInfo;
   }
 
-  public static void load_user_data(String filePath) throws ClassNotFoundException, IOException {
+  public static void load_user_data(Context context, String filePath) throws ClassNotFoundException, IOException {
     if (filePath == null) {
       filePath = userInfoFile;
     }
-    FileInputStream fileIn = new FileInputStream(filePath);
-    ObjectInputStream in = new ObjectInputStream(fileIn);
-    Object deserialized = in.readObject();
-    if (deserialized instanceof UserInfo) {
-      userInfo = (UserInfo)deserialized;
+    FileInputStream fileIn = null;
+    try {
+      fileIn = context.openFileInput(filePath);
+    } catch (IOException e) {
+      FileOutputStream fileOut = context.openFileOutput(filePath, MODE_PRIVATE);
+      fileOut.write(0);
     }
-    in.close();
-    fileIn.close();
+    if (fileIn != null) {
+      ObjectInputStream in = new ObjectInputStream(fileIn);
+      Object deserialized = in.readObject();
+      if (deserialized instanceof UserInfo) {
+        userInfo = (UserInfo) deserialized;
+      }
+    }
   }
 
-  public static void save_user_data(String filePath) throws IOException {
+  public static void save_user_data(Context context, String filePath) throws IOException {
     if (filePath == null) {
       filePath = userInfoFile;
     }
-    FileOutputStream fileOut = new FileOutputStream(filePath);
-    ObjectOutputStream out = new ObjectOutputStream(fileOut);
-    out.writeObject(UserInfoSingleton.getInstance());
-    out.close();
-    fileOut.close();
+    FileOutputStream fileOut = context.openFileOutput(filePath, MODE_PRIVATE);
+    if (fileOut != null) {
+      ObjectOutputStream out = new ObjectOutputStream(fileOut);
+      out.writeObject(UserInfoSingleton.getInstance());
+      out.close();
+      fileOut.close();
+    }
   }
 }

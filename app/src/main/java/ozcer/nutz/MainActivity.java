@@ -10,6 +10,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ozcer.nutz.StoreLocal.UserInfo;
 import ozcer.nutz.StoreLocal.UserInfoSingleton;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,10 +22,12 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    UserInfoSingleton.getInstance();
     try {
-      UserInfoSingleton.load_user_data(null);
+      UserInfoSingleton.load_user_data(getApplicationContext(), null);
     } catch (IOException e) {
-      Toast.makeText(this, "Failed to load user info", Toast.LENGTH_LONG).show();
+      String name = e.getMessage();
+      Toast.makeText(this, name, Toast.LENGTH_LONG).show();
     } catch (ClassNotFoundException e) {
       Toast.makeText(this, "ClassNotFoundException", Toast.LENGTH_SHORT).show();
     }
