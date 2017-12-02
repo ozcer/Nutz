@@ -1,28 +1,22 @@
 package ozcer.nutz.Structs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Course {
   private String courseCode;
   private String name;
-  private ArrayList<String> prereqs; // just a course code
+  private List<String> prereqs; // just a course code
 
-  public Course(String courseCode, String name, String term, ArrayList<String> prereqs){
-    this.courseCode = courseCode;
-    this.name = name;
-    this.prereqs = prereqs;
-  }
-
-  public ArrayList<String> getPrereqs() {
+  public List<String> getPrereqs() {
     return prereqs;
   }
 
-  public void setPrereqs(ArrayList<String> prereqs) {
+  public void setPrereqs(List<String> prereqs) {
     this.prereqs = prereqs;
   }
 
   public String getName() {
-
     return name;
   }
 
@@ -31,7 +25,6 @@ public class Course {
   }
 
   public String getCourseCode() {
-
     return courseCode;
   }
 

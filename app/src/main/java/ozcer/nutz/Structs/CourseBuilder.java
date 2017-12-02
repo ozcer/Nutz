@@ -1,32 +1,27 @@
 package ozcer.nutz.Structs;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CourseBuilder {
-  private String courseCode;
-  private String name;
-  private ArrayList<String> prereqs; // just a course code
+  private Course course;
 
-  public CourseBuilder() {
-  }
-
-  public CourseBuilder setCourseCode(String courseCode){
-    this.courseCode = courseCode;
+  public CourseBuilder setCourseCode(String courseCode) {
+    this.course.setCourseCode(courseCode);
     return this;
   }
 
-  public CourseBuilder setName(String name){
-    this.name = name;
+  public CourseBuilder setName(String name) {
+    this.course.setName(name);
     return this;
   }
 
-  public CourseBuilder setPrereqs(ArrayList<String> prereqs){
-    this.prereqs = prereqs;
+  public CourseBuilder setPrereqs(List<String> prereqs){
+    this.course.setPrereqs(prereqs);
     return this;
   }
 
-  public Course createCourse() {
-    return new Course(courseCode, name, prereqs);
+  public Course build() {
+    return this.course;
   }
 
 }
