@@ -3,9 +3,13 @@ package ozcer.nutz.Structs;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Course {
+public class Course implements Serializable {
+
+  private static final long serialVersionUID = 8087L;
+
   private String courseCode;
   private String courseName;
   private String courseId;
