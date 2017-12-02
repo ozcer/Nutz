@@ -1,15 +1,111 @@
 package ozcer.nutz;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import ozcer.nutz.Structs.API;
 
 public class SearchCourse extends AppCompatActivity {
+
+    String apiKey = "aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
+    String apiBase = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"CSC\"&key=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_course);
+        EditText searchFieldEdt = (EditText) findViewById(R.id.searchFieldEdt);
 
+        searchFieldEdt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView theTv, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String searchTerm = theTv.getText().toString();
+                    Toast.makeText(SearchCourse.this, "task bout to start B", Toast.LENGTH_SHORT).show();
+                    new SearchByCourseCodeTask().execute(searchTerm);
+                }
+                return false;
+            }
+        });
+    }
 
+    public class SearchByCourseCodeTask extends AsyncTask<String, Void, JSONArray> {
+
+        @Override
+        protected JSONArray doInBackground(String... params) {
+            HttpsURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try {
+                URL url = new URL(
+                        String.format(apiBase+apiKey));
+                connection  = (HttpsURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+                while((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+
+                String finalJson = buffer.toString();
+                Log.i("oscar", finalJson);
+                JSONArray jsonArray = new JSONArray(finalJson);
+
+                return jsonArray;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if(connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if(reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray jsonArray) {
+            super.onPostExecute(jsonArray);
+            Log.i("oscar", "test");
+
+        }
     }
 }
