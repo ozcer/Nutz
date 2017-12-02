@@ -6,33 +6,32 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class UserSettingsCreator {
+public class UserInfoSingleton {
 
-  private static UserSettings userSettings = null;
+  private static UserInfo userInfo = null;
 
-  public static UserSettings getInstance() {
-    if (userSettings == null) {
-      userSettings = new UserSettings();
+  public static UserInfo getInstance() {
+    if (userInfo == null) {
+      userInfo = new UserInfo();
     }
-    return userSettings;
+    return userInfo;
   }
 
   public static void load_user_data(String filePath) throws ClassNotFoundException, IOException {
     FileInputStream fileIn = new FileInputStream(filePath);
     ObjectInputStream in = new ObjectInputStream(fileIn);
     Object deserialized = in.readObject();
-    UserSettings userSettings = null;
-    if (deserialized instanceof UserSettings) {
-      userSettings = (UserSettings)deserialized;
+    if (deserialized instanceof UserInfo) {
+      userInfo = (UserInfo)deserialized;
     }
     in.close();
     fileIn.close();
   }
 
-  public static void save_user_data(UserSettings userSettings, String filePath) throws IOException {
+  public static void save_user_data(UserInfo userInfo, String filePath) throws IOException {
     FileOutputStream fileOut = new FileOutputStream(filePath);
     ObjectOutputStream out = new ObjectOutputStream(fileOut);
-    out.writeObject(userSettings);
+    out.writeObject(userInfo);
     out.close();
     fileOut.close();
   }
