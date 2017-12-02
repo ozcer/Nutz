@@ -1,11 +1,14 @@
 package ozcer.nutz;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +29,10 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import ozcer.nutz.StoreLocal.UserInfo;
+import ozcer.nutz.StoreLocal.UserInfoSingleton;
 import ozcer.nutz.Structs.Course;
+import ozcer.nutz.Structs.CourseBuilder;
 
 public class CourseDetailActivity extends AppCompatActivity {
     String apiKey = "key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
@@ -108,8 +114,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             super.onPostExecute(JsonCourse);
                 try {
                     Log.i("Kappa","llll");
-                    String courseName = JsonCourse.getString("name");
-                    String courseTerm = JsonCourse.getString("term");
+                    final String courseName = JsonCourse.getString("name");
+                    final String courseTerm = JsonCourse.getString("term");
                     String coursePrereq = JsonCourse.getString("prerequisites");
                     TextView nameView = findViewById(R.id.courseDetailName);
                     nameView.setText(courseName);
@@ -123,6 +129,22 @@ public class CourseDetailActivity extends AppCompatActivity {
                         prereqList.add(matcher.group().toString());
                     }
                     prereqView.setText(prereqList.toString());
+
+                    Button completedBtn = (Button) findViewById(R.id.completedBtn);
+
+                    completedBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            UserInfo userInfo = UserInfoSingleton.getInstance();
+                            CourseBuilder courseBuilder = new CourseBuilder();
+                            Course course = courseBuilder.setCourseId(urlFindByCourseId)
+                                    .setCourseCode(courseCode)
+                                    .setCourseName(courseName)
+                                    .setTerm(Integer.parseInt(courseTerm))
+                                    .build();
+                            userInfo.addCourse(course);
+                        }
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
