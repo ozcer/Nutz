@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    String apiKey = "aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     ArrayList<String> searchResult = new ArrayList<>();
 
     @Override
