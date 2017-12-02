@@ -6,7 +6,7 @@ import java.util.List;
 public class CourseBuilder {
   private String courseCode;
   private String courseName;
-  private List<String> prereqs;
+  private List<Course> prereqs;
 
   public CourseBuilder setCourseCode(String courseCode) {
     this.courseCode = courseCode;
@@ -18,7 +18,7 @@ public class CourseBuilder {
     return this;
   }
 
-  public CourseBuilder setPrereqs(List<String> prereqs){
+  public CourseBuilder setPrereqs(List<Course> prereqs){
     this.prereqs = prereqs;
     return this;
   }

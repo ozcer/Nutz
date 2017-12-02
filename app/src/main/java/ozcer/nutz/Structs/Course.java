@@ -5,13 +5,13 @@ import java.util.List;
 public class Course {
   private String courseCode;
   private String courseName;
-  private List<String> prereqs; // just a course code
+  private List<Course> prereqs;
 
-  public List<String> getPrereqs() {
+  public List<Course> getPrereqs() {
     return prereqs;
   }
 
-  public void setPrereqs(List<String> prereqs) {
+  public void setPrereqs(List<Course> prereqs) {
     this.prereqs = prereqs;
   }
 
