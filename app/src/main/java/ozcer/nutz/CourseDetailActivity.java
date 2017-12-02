@@ -33,12 +33,17 @@ public class CourseDetailActivity extends AppCompatActivity {
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/";
     String apiBase2 = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
     String courseCode="";
+    String actualCourseCode="";
     String urlFindByCourseId="";
+    String urlFindByCourseCode="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
         String courseCode = getIntent().getStringExtra("COURSE_ID");
+        String actualCourseCode = courseCode.substring(0, 8);
+        urlFindByCourseId = apiBase + courseCode +"/?" + apiKey;
+        urlFindByCourseCode = apiBase2 + actualCourseCode + "&" + apiKey;
         TextView title = (TextView) findViewById(R.id.courseDetailCode);
         title.setText(courseCode);
         HttpsURLConnection connection = null;
