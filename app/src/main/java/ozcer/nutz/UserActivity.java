@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +26,12 @@ public class UserActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    CourseBuilder courseBuilder = new CourseBuilder();
-    Course course1 = courseBuilder.setCourseCode("CSCA08")
-            .setCourseName("Intro to CS")
-            .build();
-    Course course2 = courseBuilder.setCourseCode("CSCA48")
-            .setCourseName("Intro to CS II")
-            .build();
-    userInfo.takenCourses.add(course1);
-    userInfo.takenCourses.add(course2);
+
+    try {
+      UserInfoSingleton.save_user_data(null);
+    } catch (IOException e) {
+      Toast.makeText(this, "Failed to save user info", Toast.LENGTH_LONG).show();
+    }
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_user);

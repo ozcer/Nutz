@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 public class UserInfoSingleton {
 
   private static UserInfo userInfo = null;
+  private final static String userInfoFile = "userInfo.ser";
 
   public static UserInfo getInstance() {
     if (userInfo == null) {
@@ -18,6 +19,9 @@ public class UserInfoSingleton {
   }
 
   public static void load_user_data(String filePath) throws ClassNotFoundException, IOException {
+    if (filePath == null) {
+      filePath = userInfoFile;
+    }
     FileInputStream fileIn = new FileInputStream(filePath);
     ObjectInputStream in = new ObjectInputStream(fileIn);
     Object deserialized = in.readObject();
@@ -28,10 +32,13 @@ public class UserInfoSingleton {
     fileIn.close();
   }
 
-  public static void save_user_data(UserInfo userInfo, String filePath) throws IOException {
+  public static void save_user_data(String filePath) throws IOException {
+    if (filePath == null) {
+      filePath = userInfoFile;
+    }
     FileOutputStream fileOut = new FileOutputStream(filePath);
     ObjectOutputStream out = new ObjectOutputStream(fileOut);
-    out.writeObject(userInfo);
+    out.writeObject(UserInfoSingleton.getInstance());
     out.close();
     fileOut.close();
   }
