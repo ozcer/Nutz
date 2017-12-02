@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,16 +24,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ozcer.nutz.Structs.API;
-
-public class SearchCourse extends AppCompatActivity {
+public class SearchCourseActivity extends AppCompatActivity {
 
     String apiKey = "aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"csca08\"&key=";
@@ -73,8 +69,11 @@ public class SearchCourse extends AppCompatActivity {
         searchResultLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
-                Intent i = new Intent(SearchCourse.this, CourseDetailActivity.class);
-                i.putExtra("COURSE_CODE", searchResultCourseCode.get(index));
+                Intent i = new Intent(SearchCourseActivity.this, CourseDetailActivity.class);
+                String courseCode = searchResultCourseCode.get(index);
+                i.putExtra("COURSE_CODE", courseCode);
+                Toast.makeText(SearchCourseActivity.this, "passing "+courseCode, Toast.LENGTH_SHORT).show();
+                startActivity(i);
             }
         });
 
@@ -137,7 +136,6 @@ public class SearchCourse extends AppCompatActivity {
 
             searchResult.clear();
             searchResultCourseCode.clear();
-            Toast.makeText(SearchCourse.this, "in post exec", Toast.LENGTH_SHORT).show();
             for(int i=0;i<jsonArray.length();i++) {
                 try {
                     JSONObject course = jsonArray.getJSONObject(i);
