@@ -35,7 +35,7 @@ public class SearchCourseActivity extends AppCompatActivity {
     String apiKey = "&key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
     ArrayList<String> searchResult;
-    ArrayList<String> searchResultCourseCode;
+    ArrayList<String> searchResultCourseId;
     ArrayAdapter<String> myAdapter;
 
 
@@ -44,10 +44,8 @@ public class SearchCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_course);
         searchResult = new ArrayList<>();
-        searchResult.add("blank 1");
-        searchResult.add("blank 2");
 
-        searchResultCourseCode = new ArrayList<>();
+        searchResultCourseId = new ArrayList<>();
 
         EditText searchFieldEdt = (EditText) findViewById(R.id.searchFieldEdt);
 
@@ -70,7 +68,7 @@ public class SearchCourseActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
                 Intent i = new Intent(SearchCourseActivity.this, CourseDetailActivity.class);
-                String courseCode = searchResultCourseCode.get(index);
+                String courseCode = searchResultCourseId.get(index);
                 i.putExtra("COURSE_CODE", courseCode);
                 Toast.makeText(SearchCourseActivity.this, "passing "+courseCode, Toast.LENGTH_SHORT).show();
                 startActivity(i);
@@ -135,14 +133,14 @@ public class SearchCourseActivity extends AppCompatActivity {
             super.onPostExecute(jsonArray);
 
             searchResult.clear();
-            searchResultCourseCode.clear();
+            searchResultCourseId.clear();
             for(int i=0;i<jsonArray.length();i++) {
                 try {
                     JSONObject course = jsonArray.getJSONObject(i);
-                    String courseCode = course.getString("code");
+                    String courseId = course.getString("id");
                     String name = course.getString("name");
-                    searchResult.add(courseCode+"\n\t"+name);
-                    searchResultCourseCode.add(courseCode);
+                    searchResult.add(courseId+"\n\t"+name);
+                    searchResultCourseId.add(courseId);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
