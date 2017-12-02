@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 
 public class UserSettingsCreator {
 
-  public UserSettings load_user_data(String filePath) throws ClassNotFoundException, IOException {
+  public static UserSettings load_user_data(String filePath) throws ClassNotFoundException, IOException {
     FileInputStream fileIn = new FileInputStream(filePath);
     ObjectInputStream in = new ObjectInputStream(fileIn);
     Object deserialized = in.readObject();
@@ -21,7 +21,7 @@ public class UserSettingsCreator {
     return userSettings;
   }
 
-  public void save_user_data(UserSettings userSettings, String filePath) throws IOException {
+  public static void save_user_data(UserSettings userSettings, String filePath) throws IOException {
     FileOutputStream fileOut = new FileOutputStream(filePath);
     ObjectOutputStream out = new ObjectOutputStream(fileOut);
     out.writeObject(userSettings);
