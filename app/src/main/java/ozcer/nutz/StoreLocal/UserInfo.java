@@ -12,6 +12,18 @@ public class UserInfo implements Serializable {
 
   public List<Course> takenCourses = new ArrayList<Course>();
 
+  public void addCourse(Course course) {
+    for (Course courseInList : this.takenCourses) {
+      if (!(course.getCourseId().equalsIgnoreCase(courseInList.getCourseId()))) {
+        takenCourses.add(course);
+      }
+    }
+
+    if (takenCourses.isEmpty()) {
+      takenCourses.add(course);
+    }
+  }
+
   protected UserInfo() {
     super();
   }

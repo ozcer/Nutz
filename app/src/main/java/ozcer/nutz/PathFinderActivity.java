@@ -19,11 +19,19 @@ public class PathFinderActivity extends AppCompatActivity {
     protected ArrayList<Course> getLeafCourses(Course rootCourse) {
         ArrayList<Course> leaves = new ArrayList<>();
         leaves.add(rootCourse);
-        for (Course course : leaves) {
+        int i = 0;
+        while (!leaves.isEmpty() && i < leaves.size()) {
+            Course course = leaves.get(i);
             List<Course> prereqCourses = course.getPrereqs();
             if (prereqCourses != null && !prereqCourses.isEmpty()) {
                 leaves.remove(course);
-                leaves.addAll(prereqCourses);
+                for (Course ccourse : prereqCourses) {
+                    if (!prereqCourses.contains(ccourse)) {
+                        prereqCourses.add(ccourse);
+                    }
+                }
+            } else {
+                i++;
             }
         }
         return leaves;

@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +25,17 @@ public class UserActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-
-    try {
-      UserInfoSingleton.save_user_data(null);
-    } catch (IOException e) {
-      Toast.makeText(this, "Failed to save user info", Toast.LENGTH_LONG).show();
-    }
+    CourseBuilder courseBuilder = new CourseBuilder();
+    Course course1 = courseBuilder.setCourseCode("CSCA08")
+            .setCourseId("CSCA08H3F20179")
+            .setCourseName("Intro to CS")
+            .build();
+    Course course2 = courseBuilder.setCourseCode("CSCA48")
+            .setCourseId("CSCA48H3S20171")
+            .setCourseName("Intro to CS II")
+            .build();
+    userInfo.addCourse(course1);
+    userInfo.addCourse(course2);
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_user);
@@ -43,8 +47,8 @@ public class UserActivity extends AppCompatActivity {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
         Intent i = new Intent(UserActivity.this, CourseDetailActivity.class);
-        String courseCode = takenCourses.get(index).getCourseName();
-        i.putExtra("COURSE_CODE", courseCode);
+        String courseId= takenCourses.get(index).getCourseId();
+        i.putExtra("COURSE_ID", courseId);
         startActivity(i);
       }
     });
