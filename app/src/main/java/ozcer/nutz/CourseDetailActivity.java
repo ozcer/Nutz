@@ -16,7 +16,9 @@ public class CourseDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_detail);
         String courseCode = getIntent().getStringExtra("courseCode");
         try {
-            URL url = new URL("p");
+            String apiKey = getResources().getString(R.string.apiKey);
+            String apiUrl = "https://cobalt.qas.im/api/1.0/courses/";
+            URL url = new URL(apiUrl + "filter?q=code:\"" + courseCode);
 
             HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
 
