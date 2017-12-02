@@ -29,6 +29,7 @@ import javax.net.ssl.HttpsURLConnection;
 import ozcer.nutz.Structs.Course;
 
 public class CourseDetailActivity extends AppCompatActivity {
+    List<Integer> availableTermsList = new ArrayList<>();
     String apiKey = "key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/";
     String apiBase2 = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
@@ -50,7 +51,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         BufferedReader reader = null;
 
         try {
-            new SearchByCourseCodeTask().execute(courseCode);
+            new SearchByCourseCodeTask().execute(urlFindByCourseId);
 
         } catch (Exception e) {
             Log.i("Exception", e.toString());
@@ -65,7 +66,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL(
-                        String.format(apiBase+params[0]+apiKey));
+                        String.format(urlFindByCourseId));
                 Log.i("url", url.toString());
                 connection  = (HttpsURLConnection) url.openConnection();
                 connection.connect();
