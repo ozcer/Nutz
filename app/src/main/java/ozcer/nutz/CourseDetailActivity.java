@@ -29,25 +29,35 @@ import javax.net.ssl.HttpsURLConnection;
 import ozcer.nutz.Structs.Course;
 
 public class CourseDetailActivity extends AppCompatActivity {
-    String apiKey = "/?key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
+    List<Integer> availableTerms;
+    String apiKey = "key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/";
+    String apiBase2= "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
     String courseCode="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
         String courseCode = getIntent().getStringExtra("COURSE_ID");
+        String actualCourseCode = courseCode.substring(0, 8);
+        String urlForCourseId = apiBase + courseCode + "/?" +apiKey;
+        String urlForCourseCode = apiBase2 + actualCourseCode + "&" + apiKey;
+        Log.i("CODE", actualCourseCode.toString());
         TextView title = (TextView) findViewById(R.id.courseDetailCode);
         title.setText(courseCode);
         HttpsURLConnection connection = null;
         BufferedReader reader = null;
 
         try {
-            new SearchByCourseCodeTask().execute(courseCode);
+            new SearchByCourseCodeTask().execute(urlForCourseId);
 
         } catch (Exception e) {
             Log.i("Exception", e.toString());
         }
+    }
+
+    public void OptimalPathForCourse(){
+
     }
     public class SearchByCourseCodeTask extends AsyncTask<String, Void, JSONObject> {
 
@@ -58,7 +68,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL(
-                        String.format(apiBase+params[0]+apiKey));
+                        String.format(params[0]));
                 Log.i("url", url.toString());
                 connection  = (HttpsURLConnection) url.openConnection();
                 connection.connect();
