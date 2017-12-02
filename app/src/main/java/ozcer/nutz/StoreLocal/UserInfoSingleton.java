@@ -14,7 +14,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class UserInfoSingleton {
 
   private static UserInfo userInfo = null;
-  private final static String userInfoFile = "userInfo.ser";
 
   public static UserInfo getInstance() {
     if (userInfo == null) {
@@ -23,30 +22,26 @@ public class UserInfoSingleton {
     return userInfo;
   }
 
-  public static void load_user_data(Context context, String filePath) throws ClassNotFoundException, IOException {
-    if (filePath == null) {
-      filePath = userInfoFile;
-    }
-    FileInputStream fileIn = null;
-    try {
-      fileIn = context.openFileInput(filePath);
-    } catch (IOException e) {
-      FileOutputStream fileOut = context.openFileOutput(filePath, MODE_PRIVATE);
-    }
-    if (fileIn != null) {
-      ObjectInputStream in = new ObjectInputStream(fileIn);
-      Object deserialized = in.readObject();
-      if (deserialized instanceof UserInfo) {
-        userInfo = (UserInfo) deserialized;
+  public static void load_user_data(Context context, File file) throws ClassNotFoundException, IOException {
+    if (file.exists()) {
+      FileInputStream fileIn = new FileInputStream(file);
+      if (fileIn != null) {
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        Object deserialized = in.readObject();
+        if (deserialized instanceof UserInfo) {
+          userInfo = (UserInfo) deserialized;
+        }
       }
+    } else {
+      file.createNewFile();
     }
   }
 
-  public static void save_user_data(Context context, String filePath) throws IOException {
-    if (filePath == null) {
-      filePath = userInfoFile;
+  public static void save_user_data(Context context, File file) throws IOException {
+    if (!file.exists()) {
+      file.createNewFile();
     }
-    FileOutputStream fileOut = context.openFileOutput(filePath, MODE_PRIVATE);
+    FileOutputStream fileOut = new FileOutputStream(file);
     if (fileOut != null) {
       ObjectOutputStream out = new ObjectOutputStream(fileOut);
       out.writeObject(UserInfoSingleton.getInstance());

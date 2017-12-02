@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +30,12 @@ public class UserActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_user);
 
-    UserInfoSingleton.getInstance();
     try {
-      UserInfoSingleton.save_user_data(getApplicationContext(), null);
+      UserInfoSingleton.getInstance();
+      File file = getApplication().getFileStreamPath("user.ser");
+      UserInfoSingleton.save_user_data(getApplicationContext(), file);
     } catch (IOException e) {
-      String name = e.getMessage();
-      Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+      Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     ListView takenCourseView = (ListView)findViewById(R.id.taken_courses);

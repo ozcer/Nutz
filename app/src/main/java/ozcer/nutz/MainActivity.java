@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -24,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     UserInfoSingleton.getInstance();
     try {
-      UserInfoSingleton.load_user_data(getApplicationContext(), null);
+      File file = getApplication().getFileStreamPath("user.ser");
+      UserInfoSingleton.load_user_data(getApplicationContext(), file);
     } catch (IOException e) {
       String name = e.getMessage();
       Toast.makeText(this, name, Toast.LENGTH_LONG).show();
