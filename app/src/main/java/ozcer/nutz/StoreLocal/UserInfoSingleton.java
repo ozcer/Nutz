@@ -32,7 +32,6 @@ public class UserInfoSingleton {
       fileIn = context.openFileInput(filePath);
     } catch (IOException e) {
       FileOutputStream fileOut = context.openFileOutput(filePath, MODE_PRIVATE);
-      fileOut.write(0);
     }
     if (fileIn != null) {
       ObjectInputStream in = new ObjectInputStream(fileIn);

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,20 +26,16 @@ public class UserActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    CourseBuilder courseBuilder = new CourseBuilder();
-    Course course1 = courseBuilder.setCourseCode("CSCA08")
-            .setCourseId("CSCA08H3F20179")
-            .setCourseName("Intro to CS")
-            .build();
-    Course course2 = courseBuilder.setCourseCode("CSCA48")
-            .setCourseId("CSCA48H3S20171")
-            .setCourseName("Intro to CS II")
-            .build();
-    userInfo.addCourse(course1);
-    userInfo.addCourse(course2);
-
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_user);
+
+    UserInfoSingleton.getInstance();
+    try {
+      UserInfoSingleton.save_user_data(getApplicationContext(), null);
+    } catch (IOException e) {
+      String name = e.getMessage();
+      Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+    }
 
     ListView takenCourseView = (ListView)findViewById(R.id.taken_courses);
     myAdapter = new ArrayAdapter<Course>(this, android.R.layout.simple_list_item_1, this.takenCourses);
