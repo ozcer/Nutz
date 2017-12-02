@@ -27,9 +27,11 @@ public class UserActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     CourseBuilder courseBuilder = new CourseBuilder();
     Course course1 = courseBuilder.setCourseCode("CSCA08")
+            .setCourseId("CSCA08H3F20179")
             .setCourseName("Intro to CS")
             .build();
     Course course2 = courseBuilder.setCourseCode("CSCA48")
+            .setCourseId("CSCA48H3S20171")
             .setCourseName("Intro to CS II")
             .build();
     userInfo.takenCourses.add(course1);
@@ -45,8 +47,8 @@ public class UserActivity extends AppCompatActivity {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
         Intent i = new Intent(UserActivity.this, CourseDetailActivity.class);
-        String courseCode = takenCourses.get(index).getCourseName();
-        i.putExtra("COURSE_CODE", courseCode);
+        String courseId= takenCourses.get(index).getCourseId();
+        i.putExtra("COURSE_ID", courseId);
         startActivity(i);
       }
     });
