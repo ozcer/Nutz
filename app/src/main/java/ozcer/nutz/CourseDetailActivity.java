@@ -4,7 +4,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -17,20 +19,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import ozcer.nutz.Structs.Course;
 
 public class CourseDetailActivity extends AppCompatActivity {
-    String apiKey = "&key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
-    String apiBase = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
+    String apiKey = "/?key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
+    String apiBase = "https://cobalt.qas.im/api/1.0/courses/";
     String courseCode="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        String courseCode = getIntent().getStringExtra("COURSE_CODE");
+        String courseCode = getIntent().getStringExtra("COURSE_ID");
         TextView title = (TextView) findViewById(R.id.courseDetailCode);
         title.setText(courseCode);
         HttpsURLConnection connection = null;
@@ -43,17 +49,17 @@ public class CourseDetailActivity extends AppCompatActivity {
             Log.i("Exception", e.toString());
         }
     }
-    String apiUrl = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"" + courseCode + "\"&key=" + apiKey;
-    public class SearchByCourseCodeTask extends AsyncTask<String, Void, JSONArray> {
+    public class SearchByCourseCodeTask extends AsyncTask<String, Void, JSONObject> {
 
         @Override
-        protected JSONArray doInBackground(String... params) {
+        protected JSONObject doInBackground(String... params) {
             HttpsURLConnection connection = null;
             BufferedReader reader = null;
 
             try {
                 URL url = new URL(
-                        String.format(apiBase+params[0]+"\""+apiKey));
+                        String.format(apiBase+params[0]+apiKey));
+                Log.i("url", url.toString());
                 connection  = (HttpsURLConnection) url.openConnection();
                 connection.connect();
 
@@ -70,9 +76,9 @@ public class CourseDetailActivity extends AppCompatActivity {
 
                 String finalJson = buffer.toString();
                 Log.i("oscar", finalJson);
-                JSONArray jsonArray = new JSONArray(finalJson);
+                JSONObject jsonObject= new JSONObject(finalJson);
 
-                return jsonArray;
+                return jsonObject;
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -96,10 +102,10 @@ public class CourseDetailActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(JSONArray jsonArray) {
-            super.onPostExecute(jsonArray);
+        protected void onPostExecute(JSONObject JsonCourse) {
+            super.onPostExecute(JsonCourse);
                 try {
-                     JSONObject JsonCourse = jsonArray.getJSONObject(0);
+                    Log.i("Kappa","llll");
                     String courseName = JsonCourse.getString("name");
                     String courseTerm = JsonCourse.getString("term");
                     String coursePrereq = JsonCourse.getString("prerequisites");
@@ -109,6 +115,12 @@ public class CourseDetailActivity extends AppCompatActivity {
                     termView.setText(courseTerm);
                     TextView prereqView = findViewById(R.id.courseDetailPrereq);
                     prereqView.setText(coursePrereq);
+                    Pattern p = Pattern.compile("[A-Z]{3}[A-Z_0-9][0-9]{2}");
+                    Matcher matcher = p.matcher(coursePrereq);
+                    while(matcher.find()){
+                        Log.i("REGEX", matcher.group());
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
