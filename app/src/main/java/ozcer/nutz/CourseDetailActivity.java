@@ -4,10 +4,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,27 +26,26 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import ozcer.nutz.StoreLocal.UserInfo;
-import ozcer.nutz.StoreLocal.UserInfoSingleton;
 import ozcer.nutz.Structs.Course;
-import ozcer.nutz.Structs.CourseBuilder;
 
 public class CourseDetailActivity extends AppCompatActivity {
-    String apiKey = "/?key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
+    String apiKey = "key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/";
-    String courseId="";
+    String apiBase2 = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
+    String courseCode="";
+    String urlFindByCourseId="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        String courseId = getIntent().getStringExtra("COURSE_ID");
+        String courseCode = getIntent().getStringExtra("COURSE_ID");
         TextView title = (TextView) findViewById(R.id.courseDetailCode);
-        title.setText(courseId);
+        title.setText(courseCode);
         HttpsURLConnection connection = null;
         BufferedReader reader = null;
 
         try {
-            new SearchByCourseCodeTask().execute(courseId);
+            new SearchByCourseCodeTask().execute(courseCode);
 
         } catch (Exception e) {
             Log.i("Exception", e.toString());
@@ -110,7 +107,8 @@ public class CourseDetailActivity extends AppCompatActivity {
         protected void onPostExecute(JSONObject JsonCourse) {
             super.onPostExecute(JsonCourse);
                 try {
-                    final String courseName = JsonCourse.getString("name");
+                    Log.i("Kappa","llll");
+                    String courseName = JsonCourse.getString("name");
                     String courseTerm = JsonCourse.getString("term");
                     String coursePrereq = JsonCourse.getString("prerequisites");
                     TextView nameView = findViewById(R.id.courseDetailName);
@@ -126,26 +124,10 @@ public class CourseDetailActivity extends AppCompatActivity {
                     }
                     prereqView.setText(prereqList.toString());
 
-                    Button completedBtn = (Button) findViewById(R.id.completedBtn);
-
-                    completedBtn.setOnClickListener(new View.OnClickListener() {
-                      @Override
-                      public void onClick(View view) {
-                        UserInfo userInfo = UserInfoSingleton.getInstance();
-                        ArrayAdapter<Course> myAdapter;
-                        List<Course> takenCourses = userInfo.takenCourses;
-                        CourseBuilder courseBuilder = new CourseBuilder();
-                        Course course = courseBuilder.setCourseId(courseId)
-                                .setCourseCode(courseId.substring(0,9))
-                                .setCourseName(courseName)
-                                .build();
-                        userInfo.addCourse(course);
-                      }
-                    });
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
         }
     }
 }
