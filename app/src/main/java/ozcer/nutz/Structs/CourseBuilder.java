@@ -41,7 +41,6 @@ public class CourseBuilder {
     course.setCourseName(this.courseName);
     course.setPrereqs(this.prereqs);
     course.setCourseId(this.courseId);
-    course.setTerm(Integer.parseInt(courseId.substring(courseId.length()-1)));
     return course;
   }
 

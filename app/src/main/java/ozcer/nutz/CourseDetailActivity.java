@@ -39,20 +39,20 @@ public class CourseDetailActivity extends AppCompatActivity {
     String apiKey = "key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/";
     String apiBase2 = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
+    String courseId="";
     String courseCode="";
-    String actualCourseCode="";
     String urlFindByCourseId="";
     String urlFindByCourseCode="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        String courseCode = getIntent().getStringExtra("COURSE_ID");
-        String actualCourseCode = courseCode.substring(0, 8);
-        urlFindByCourseId = apiBase + courseCode +"/?" + apiKey;
-        urlFindByCourseCode = apiBase2 + actualCourseCode + "&" + apiKey;
+        String courseId = getIntent().getStringExtra("COURSE_ID");
+        String courseCode = courseId.substring(0, 8);
+        urlFindByCourseId = apiBase + courseId +"/?" + apiKey;
+        urlFindByCourseCode = apiBase2 + courseCode + "&" + apiKey;
         TextView title = (TextView) findViewById(R.id.courseDetailCode);
-        title.setText(courseCode);
+        title.setText(courseId);
         HttpsURLConnection connection = null;
         BufferedReader reader = null;
 
@@ -144,7 +144,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                         public void onClick(View view) {
                             UserInfo userInfo = UserInfoSingleton.getInstance();
                             CourseBuilder courseBuilder = new CourseBuilder();
-                            Course course = courseBuilder.setCourseId(urlFindByCourseId)
+                            Course course = courseBuilder.setCourseId(courseId)
                                     .setCourseCode(courseCode)
                                     .setCourseName(courseName)
                                     .build();
