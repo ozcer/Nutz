@@ -47,7 +47,6 @@ public class CourseDetailActivity extends AppCompatActivity {
             String finalJson = buffer.toString();
             JSONArray jsonArray = new JSONArray(finalJson);
             JSONObject JsonCourse = jsonArray.getJSONObject(0);
-
         } catch (Exception e) {
             Log.i("Exception", e.toString());
         }
