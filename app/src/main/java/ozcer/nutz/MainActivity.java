@@ -7,10 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import ozcer.nutz.Structs.Course;
-import ozcer.nutz.Structs.CourseBuilder;
 
 public class MainActivity extends AppCompatActivity {
 

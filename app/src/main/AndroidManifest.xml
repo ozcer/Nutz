@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SearchCourseActivity" />
+        <activity android:name=".UserActivity" />
         <activity android:name=".CourseDetailActivity"></activity>
     </application>
 
