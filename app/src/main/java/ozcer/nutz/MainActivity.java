@@ -17,6 +17,15 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    Button userBtn = (Button) findViewById(R.id.userBtn);
+    userBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(MainActivity.this, UserInfo.class);
+        startActivity(intent);
+      }
+    });
+
     Button searchBtn = (Button) findViewById(R.id.searchCourseBtn);
 
     searchBtn.setOnClickListener(new View.OnClickListener() {
