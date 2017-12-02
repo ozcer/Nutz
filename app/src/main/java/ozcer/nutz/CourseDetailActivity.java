@@ -57,6 +57,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         BufferedReader reader = null;
 
         try {
+            new SearchByActualCourseCodeTask().execute(urlFindByCourseCode);
             new SearchByCourseCodeTask().execute(urlFindByCourseId);
 
         } catch (Exception e) {
@@ -166,7 +167,7 @@ public class CourseDetailActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL(
-                        String.format(urlFindByCourseId));
+                        String.format(urlFindByCourseCode));
                 connection  = (HttpsURLConnection) url.openConnection();
                 connection.connect();
 
@@ -184,7 +185,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                 String finalJson = buffer.toString();
                 Log.i("oscar", finalJson);
                 JSONArray jsonArray = new JSONArray(finalJson);
-
+                Log.i("oscarrrrrr", jsonArray.toString());
                 return jsonArray;
 
             } catch (MalformedURLException e) {
@@ -211,15 +212,17 @@ public class CourseDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray jsonArray) {
             super.onPostExecute(jsonArray);
-
-
-            for(int i=0;i<jsonArray.length();i++) {
-                try {
-                    JSONObject course = jsonArray.getJSONObject(i);
-                    String courseId = course.getString("id");
-                    String name = course.getString("name");
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            if(jsonArray != null) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        JSONObject course = jsonArray.getJSONObject(i);
+                        String courseId = course.getString("id");
+                        Integer currCourseTerm = Integer.parseInt(
+                                courseId.substring(courseId.length() - 1, courseId.length()));
+                        Log.i("Brian?", currCourseTerm.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
