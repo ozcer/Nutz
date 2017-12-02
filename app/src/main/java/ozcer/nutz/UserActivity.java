@@ -34,8 +34,8 @@ public class UserActivity extends AppCompatActivity {
             .setCourseId("CSCA48H3S20171")
             .setCourseName("Intro to CS II")
             .build();
-    userInfo.takenCourses.add(course1);
-    userInfo.takenCourses.add(course2);
+    userInfo.addCourse(course1);
+    userInfo.addCourse(course2);
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_user);

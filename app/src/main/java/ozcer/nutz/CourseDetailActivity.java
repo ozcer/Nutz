@@ -139,7 +139,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                                 .setCourseCode(courseId.substring(0,9))
                                 .setCourseName(courseName)
                                 .build();
-                        userInfo.takenCourses.add(course);
+                        userInfo.addCourse(course);
                       }
                     });
 
