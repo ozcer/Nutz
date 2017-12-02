@@ -118,12 +118,13 @@ public class CourseDetailActivity extends AppCompatActivity {
                     TextView termView = findViewById(R.id.courseDetailTerm);
                     termView.setText(courseTerm);
                     TextView prereqView = findViewById(R.id.courseDetailPrereq);
-                    prereqView.setText(coursePrereq);
                     Pattern p = Pattern.compile("[A-Z]{3}[A-Z_0-9][0-9]{2}");
                     Matcher matcher = p.matcher(coursePrereq);
+                    List prereqList = new ArrayList();
                     while(matcher.find()){
-                        Log.i("REGEX", matcher.group());
+                        prereqList.add(matcher.group().toString());
                     }
+                    prereqView.setText(prereqList.toString());
 
                     Button completedBtn = (Button) findViewById(R.id.completedBtn);
 
