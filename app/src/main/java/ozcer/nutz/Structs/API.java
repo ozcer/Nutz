@@ -24,6 +24,10 @@ public class API {
 
     String apiKey = "aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
 
+    public void searchByCourseCode(String searchTerm) {
+        new SearchByCourseCodeTask().execute(searchTerm);
+    }
+
     public class SearchByCourseCodeTask extends AsyncTask<String, Void, JSONArray> {
 
         @Override
