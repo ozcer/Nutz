@@ -138,18 +138,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                         prereqList.add(matcher.group().toString());
                     }
                     prereqView.setText(prereqList.toString());
-                    ListView searchResultLv = (ListView)findViewById(R.id.searchResultLv);
-                    ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, prereqList);
-                    searchResultLv.setAdapter(myAdapter);
-                    searchResultLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
-                            Intent i = new Intent(CourseDetailActivity.this, CourseDetailActivity.class);
-                            String courseCode = prereqList.get(index);
-                            i.putExtra("COURSE_ID", courseCode);
-                            startActivity(i);
-                        }
-                    });
+
                     Button completedBtn = (Button) findViewById(R.id.completedBtn);
 
                     completedBtn.setOnClickListener(new View.OnClickListener() {
