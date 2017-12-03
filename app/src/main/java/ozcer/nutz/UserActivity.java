@@ -29,7 +29,7 @@ public class UserActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_user);
-    
+
     try {
       UserInfoSingleton.getInstance();
       File file = getApplication().getFileStreamPath("user.ser");
