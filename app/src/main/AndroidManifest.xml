@@ -22,11 +22,6 @@
         <activity android:name=".UserActivity"/>
         <activity android:name=".CourseDetailActivity"/>
         <activity android:name=".PathFinderActivity"/>
-        <activity
-            android:name=".BreadthActivity"
-            android:label="@string/title_activity_breadth"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
     </application>
 
 </manifest>
