@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +37,9 @@ import ozcer.nutz.Structs.Course;
 import ozcer.nutz.Structs.CourseBuilder;
 
 public class CourseDetailActivity extends AppCompatActivity {
+    ArrayList<String> prereqList = new ArrayList();
     List<Integer> availableTermsList = new ArrayList<>();
+    String availableTermsString = new String();
     String apiKey = "key=aCmmLsCQbeovDkMfOtcUbzkLxcYvChMm";
     String apiBase = "https://cobalt.qas.im/api/1.0/courses/";
     String apiBase2 = "https://cobalt.qas.im/api/1.0/courses/filter?q=code:\"";
@@ -48,6 +52,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
         String courseId = getIntent().getStringExtra("COURSE_ID");
+        Log.i("Keepo", courseId);
         String courseCode = courseId.substring(0, 8);
         urlFindByCourseId = apiBase + courseId +"/?" + apiKey;
         urlFindByCourseCode = apiBase2 + courseCode + "&" + apiKey;
@@ -126,17 +131,25 @@ public class CourseDetailActivity extends AppCompatActivity {
                     String coursePrereq = JsonCourse.getString("prerequisites");
                     TextView nameView = findViewById(R.id.courseDetailName);
                     nameView.setText(courseName);
-                    TextView termView = findViewById(R.id.courseDetailTerm);
-                    termView.setText(courseTerm);
                     TextView prereqView = findViewById(R.id.courseDetailPrereq);
                     Pattern p = Pattern.compile("[A-Z]{3}[A-Z_0-9][0-9]{2}");
                     Matcher matcher = p.matcher(coursePrereq);
-                    List prereqList = new ArrayList();
                     while(matcher.find()){
                         prereqList.add(matcher.group().toString());
                     }
                     prereqView.setText(prereqList.toString());
-
+                    ListView searchResultLv = (ListView)findViewById(R.id.searchResultLv);
+                    ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, prereqList);
+                    searchResultLv.setAdapter(myAdapter);
+                    searchResultLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                            Intent i = new Intent(CourseDetailActivity.this, CourseDetailActivity.class);
+                            String courseCode = prereqList.get(index);
+                            i.putExtra("COURSE_ID", courseCode);
+                            startActivity(i);
+                        }
+                    });
                     Button completedBtn = (Button) findViewById(R.id.completedBtn);
 
                     completedBtn.setOnClickListener(new View.OnClickListener() {
@@ -220,10 +233,18 @@ public class CourseDetailActivity extends AppCompatActivity {
                         Integer currCourseTerm = Integer.parseInt(
                                 courseId.substring(courseId.length() - 1, courseId.length()));
                         Log.i("Brian?", currCourseTerm.toString());
+                        if(!availableTermsList.contains(currCourseTerm)){
+                            availableTermsList.add(currCourseTerm);
+                        }
+                        availableTermsString = availableTermsString + course.getString("term") + ", ";
+                        Log.i("Brian2.0", availableTermsList.toString());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+                String finalAvailabletermsString = availableTermsString.substring(0, availableTermsString.length()-2);
+                TextView termView = findViewById(R.id.courseDetailTerm);
+                termView.setText(finalAvailabletermsString);
             }
         }
     }

@@ -58,6 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/courseDetailPrereqHeader"
                 android:text=""/>
+            <ListView
+                android:id="@+id/courseDetailPrereqList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
         </RelativeLayout>
 
     <Button
