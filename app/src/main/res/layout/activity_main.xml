@@ -42,7 +42,18 @@
         />
 
 
-
+    <Button
+        android:id="@+id/breadthBtn"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="170dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:text="Available Courses"
+        android:padding="20dp"
+        android:layout_below="@id/searchCourseBtn"
+        android:background="@color/colorAccent"
+        android:layout_centerHorizontal="true"
+        />
 
 
 </RelativeLayout>
