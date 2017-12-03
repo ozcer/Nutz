@@ -18,5 +18,11 @@
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/naturalsciencence"
+        android:scaleType="centerCrop"
+        />
 
 </android.support.constraint.ConstraintLayout>
