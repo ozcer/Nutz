@@ -44,6 +44,17 @@ public class MainActivity extends AppCompatActivity {
     }
     });
 
+    Button breadthBtn = (Button) findViewById(R.id.breadthBtn);
+
+    breadthBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(MainActivity.this, BreadthActivity.class);
+        startActivity(intent);
+      }
+    });
+
+
     Button searchBtn = (Button) findViewById(R.id.searchCourseBtn);
 
     searchBtn.setOnClickListener(new View.OnClickListener() {
