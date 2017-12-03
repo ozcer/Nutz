@@ -162,6 +162,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                                     .setCourseName(courseName)
                                     .build();
                             userInfo.addCourse(course);
+                            Toast.makeText(getApplicationContext(), "Course Added!", Toast.LENGTH_LONG).show();
                         }
                     });
 

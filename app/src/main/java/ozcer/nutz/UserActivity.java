@@ -3,7 +3,6 @@ package ozcer.nutz;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,13 +30,6 @@ public class UserActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_user);
 
-    try {
-      UserInfoSingleton.getInstance();
-      File file = getApplication().getFileStreamPath("user.ser");
-      UserInfoSingleton.save_user_data(getApplicationContext(), file);
-    } catch (IOException e) {
-      Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-    }
     ListView takenCourseView = (ListView)findViewById(R.id.taken_courses);
     myAdapter = new ArrayAdapter<Course>(this, android.R.layout.simple_list_item_1, this.takenCourses);
     takenCourseView.setAdapter(myAdapter);
@@ -46,14 +38,21 @@ public class UserActivity extends AppCompatActivity {
       public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
         Intent i = new Intent(UserActivity.this, CourseDetailActivity.class);
         String courseId= takenCourses.get(index).getCourseId();
-        Log.i("Brian Harrington", courseId);
         i.putExtra("COURSE_ID", courseId);
         startActivity(i);
       }
     });
   }
   @Override
-  public void onBackPressed(){
+  public void onBackPressed() {
+    try {
+      UserInfoSingleton.getInstance();
+      File file = getApplication().getFileStreamPath("user.ser");
+      UserInfoSingleton.save_user_data(getApplicationContext(), file);
+      Toast.makeText(this, "Saving user info", Toast.LENGTH_SHORT).show();
+    } catch (IOException e) {
+      Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+    }
     super.onBackPressed();
     finish();
   }
