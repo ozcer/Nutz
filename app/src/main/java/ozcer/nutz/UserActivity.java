@@ -30,14 +30,6 @@ public class UserActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_user);
 
-    try {
-      UserInfoSingleton.getInstance();
-      File file = getApplication().getFileStreamPath("user.ser");
-      UserInfoSingleton.save_user_data(getApplicationContext(), file);
-    } catch (IOException e) {
-      Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-    }
-
     ListView takenCourseView = (ListView)findViewById(R.id.taken_courses);
     myAdapter = new ArrayAdapter<Course>(this, android.R.layout.simple_list_item_1, this.takenCourses);
     takenCourseView.setAdapter(myAdapter);
@@ -52,7 +44,15 @@ public class UserActivity extends AppCompatActivity {
     });
   }
   @Override
-  public void onBackPressed(){
+  public void onBackPressed() {
+    try {
+      UserInfoSingleton.getInstance();
+      File file = getApplication().getFileStreamPath("user.ser");
+      UserInfoSingleton.save_user_data(getApplicationContext(), file);
+      Toast.makeText(this, "Saving user info", Toast.LENGTH_SHORT).show();
+    } catch (IOException e) {
+      Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+    }
     super.onBackPressed();
     finish();
   }

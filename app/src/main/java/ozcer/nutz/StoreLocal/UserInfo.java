@@ -13,16 +13,7 @@ public class UserInfo implements Serializable {
   public List<Course> takenCourses = new ArrayList<Course>();
 
   public void addCourse(Course course) {
-    boolean added = false;
-    for (Course courseInList : this.takenCourses) {
-      if (course.getCourseId().equalsIgnoreCase(courseInList.getCourseId())) {
-        added = true;
-      }
-    }
-
-    if (!added) {
-      takenCourses.add(course);
-    }
+    this.takenCourses.add(course);
   }
 
   public boolean hasTaken(Course course) {

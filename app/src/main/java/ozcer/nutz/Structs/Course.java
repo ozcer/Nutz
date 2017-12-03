@@ -1,8 +1,5 @@
 package ozcer.nutz.Structs;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import java.io.Serializable;
 import java.util.List;
 

@@ -70,7 +70,6 @@ public class SearchCourseActivity extends AppCompatActivity {
                 Intent i = new Intent(SearchCourseActivity.this, CourseDetailActivity.class);
                 String courseCode = searchResultCourseId.get(index);
                 i.putExtra("COURSE_ID", courseCode);
-                Toast.makeText(SearchCourseActivity.this, "passing "+courseCode, Toast.LENGTH_SHORT).show();
                 startActivity(i);
             }
         });

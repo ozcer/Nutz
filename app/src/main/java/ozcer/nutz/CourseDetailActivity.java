@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -149,6 +150,7 @@ public class CourseDetailActivity extends AppCompatActivity {
                                     .setCourseName(courseName)
                                     .build();
                             userInfo.addCourse(course);
+                            Toast.makeText(getApplicationContext(), "Course Added!", Toast.LENGTH_LONG).show();
                         }
                     });
 
