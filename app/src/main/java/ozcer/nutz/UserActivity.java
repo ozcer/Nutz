@@ -49,7 +49,6 @@ public class UserActivity extends AppCompatActivity {
       UserInfoSingleton.getInstance();
       File file = getApplication().getFileStreamPath("user.ser");
       UserInfoSingleton.save_user_data(getApplicationContext(), file);
-      Toast.makeText(this, "Saving user info", Toast.LENGTH_SHORT).show();
     } catch (IOException e) {
       Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
     }
